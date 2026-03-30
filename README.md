@@ -88,6 +88,8 @@ For Atlas Math 2.5, the preferred standard for new modules is:
 - identity-aware
 - split-safe
 
+See [`MATH_GENERATOR.md`](./MATH_GENERATOR.md) for the contributor guide and recommended generator contract.
+
 ---
 
 ### 3. Difficulty-aware dataset building
@@ -235,25 +237,36 @@ atlas-math list --json
 ### Build a dataset directly from modules
 
 ```bash
-atlas-math build   --topic algebra   --size medium   --output outputs/algebra.jsonl
+atlas-math build \
+  --topic algebra \
+  --size medium \
+  --output outputs/algebra.jsonl
 ```
 
 ### Export a repository
 
 ```bash
-atlas-math repository   --topics algebra geometry   --samples-per-level 100   --output-dir repository
+atlas-math repository \
+  --topics algebra geometry \
+  --samples-per-level 100 \
+  --output-dir repository
 ```
 
 ### Build a dataset from a repository
 
 ```bash
-atlas-math repository-build   --repository-dir repository   --size large   --output outputs/dataset.jsonl
+atlas-math repository-build \
+  --repository-dir repository \
+  --size large \
+  --output outputs/dataset.jsonl
 ```
 
 ### Generate coverage reports
 
 ```bash
-atlas-math report   --repository-dir repository   --dashboard
+atlas-math report \
+  --repository-dir repository \
+  --dashboard
 ```
 
 ---
@@ -290,7 +303,13 @@ Builds a dataset directly from registered modules.
 ### Key options
 
 ```bash
-atlas-math build   --topic algebra   --size medium   --difficulty-mix balanced   --generation-mode auto   --format clean   --output outputs/output.jsonl
+atlas-math build \
+  --topic algebra \
+  --size medium \
+  --difficulty-mix balanced \
+  --generation-mode auto \
+  --format clean \
+  --output outputs/output.jsonl
 ```
 
 ### Build options
@@ -343,7 +362,11 @@ Exports repository content from selected modules.
 ### Example
 
 ```bash
-atlas-math repository   --topic geometry   --output-dir repository   --samples-per-level 50   --format rich
+atlas-math repository \
+  --topic geometry \
+  --output-dir repository \
+  --samples-per-level 50 \
+  --format rich
 ```
 
 ### Options
@@ -368,7 +391,13 @@ Builds a release dataset from repository content.
 ### Example
 
 ```bash
-atlas-math repository-build   --repository-dir repository   --topics algebra   --difficulties level_3 level_4   --source-kind auto   --dedupe-mode canonical   --output outputs/repository_build.jsonl
+atlas-math repository-build \
+  --repository-dir repository \
+  --topics algebra \
+  --difficulties level_3 level_4 \
+  --source-kind auto \
+  --dedupe-mode canonical \
+  --output outputs/repository_build.jsonl
 ```
 
 ### Options
@@ -408,7 +437,9 @@ Analyzes a repository and writes coverage reports.
 ### Example
 
 ```bash
-atlas-math report   --repository-dir repository   --dashboard
+atlas-math report \
+  --repository-dir repository \
+  --dashboard
 ```
 
 ### Outputs
@@ -474,6 +505,8 @@ A strong generator module should be:
 - bounded in operational cost
 - identity-aware
 - repository-safe
+
+The full contributor guidance lives in [`MATH_GENERATOR.md`](./MATH_GENERATOR.md).
 
 ### Preferred exported functions
 
@@ -643,13 +676,14 @@ Atlas Math 2.5 is suitable for:
 
 When adding a new module:
 
-1. Define `MODULE_INFO` accurately.
-2. Implement the supported difficulty ladder explicitly.
-3. Prefer `make_sample()` for consistent record shape.
-4. Keep enumeration finite and operationally bounded.
-5. Add stable identity metadata where possible.
-6. Keep `estimate_capacity()` cheap.
-7. Make the module repository-safe and split-safe.
+1. Read [`MATH_GENERATOR.md`](./MATH_GENERATOR.md).
+2. Define `MODULE_INFO` accurately.
+3. Implement the supported difficulty ladder explicitly.
+4. Prefer `make_sample()` for consistent record shape.
+5. Keep enumeration finite and operationally bounded.
+6. Add stable identity metadata where possible.
+7. Keep `estimate_capacity()` cheap.
+8. Make the module repository-safe and split-safe.
 
 A practical review checklist:
 
@@ -664,36 +698,6 @@ A practical review checklist:
 
 ---
 
-## Roadmap
-
-Near-term directions suggested by the current architecture include:
-
-- stronger repository manifests
-- richer case-level exports
-- improved split-aware release tooling
-- stricter generator validation
-- expanded reasoning coverage across topics
-
----
-
 ## License
 
-Add project license details here.
-
----
-
-## Summary
-
-Atlas Math 2.5 is not just a sample generator. It is a full **generation + repository + rebuild + reporting** system for mathematical reasoning datasets.
-
-It shifts the workflow from:
-
-```text
-generate → use
-```
-
-to:
-
-```text
-generate → store → analyze → rebuild → evaluate
-```
+MIT License
